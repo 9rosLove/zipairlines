@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import socket
 from datetime import timedelta
 from pathlib import Path
 
@@ -84,6 +85,9 @@ WSGI_APPLICATION = "zipairlines.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1']
 
 DATABASES = {
     "default": {
