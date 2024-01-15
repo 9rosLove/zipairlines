@@ -16,5 +16,11 @@ class AirplaneViewset(viewsets.ModelViewSet):
             serializer_class = AirplaneDetailSerializer
         return serializer_class
 
+    def get_queryset(self):
+        queryset = self.queryset
+        if self.action == "retrieve":
+            queryset = queryset.select_related("created_by")
+        return queryset
+
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
