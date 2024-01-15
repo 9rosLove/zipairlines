@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from airplanes.models import Airplane
@@ -11,6 +11,9 @@ class AirplaneViewset(viewsets.ModelViewSet):
     serializer_class = AirplaneSerializer
     permission_classes = [IsAuthenticated, ]
     pagination_class = AirplanePagination
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    ordering_fields = ["airplane_id", "passengers_count"]
+    search_fields = ["airplane_id", ]
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
