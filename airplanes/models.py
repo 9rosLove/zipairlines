@@ -18,13 +18,11 @@ class Airplane(models.Model):
         return self.airplane_id * 200
 
     def fuel_consumption_per_minute(self):
-        fuel_consumption = log(self.airplane_id) * 0.8 - self.passengers_count * 0.002
+        base_fuel_consumption = log(self.airplane_id) * 0.8
+        additional_fuel_consumption = self.passengers_count * 0.002
+        fuel_consumption = base_fuel_consumption + additional_fuel_consumption
 
-        return fuel_consumption if fuel_consumption else 0
+        return fuel_consumption
 
     def maximum_flight_time_in_minutes(self):
-        return (
-            self.fuel_tank_capacity_in_liters() / self.fuel_consumption_per_minute()
-            if self.fuel_consumption_per_minute() > 0
-            else 0
-        )
+        return self.fuel_tank_capacity_in_liters() / self.fuel_consumption_per_minute()
