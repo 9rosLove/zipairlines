@@ -48,7 +48,7 @@ class TestAuthenticated(TestCase):
         response = self.client.get(AIRPLANE_URL)
         serializer = AirplaneSerializer(airplane)
 
-        self.assertIn(serializer.data,response.data)
+        self.assertIn(serializer.data, response.data)
         self.assertEqual(response.status_code, 200)
 
     def test_delete_airplane_authenticated(self):

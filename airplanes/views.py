@@ -1,5 +1,5 @@
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 
 from airplanes.models import Airplane
 from airplanes.pagination import AirplanePagination
@@ -17,14 +17,18 @@ class AirplaneViewset(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = self.serializer_class
+
         if self.action == "retrieve":
             serializer_class = AirplaneDetailSerializer
+
         return serializer_class
 
     def get_queryset(self):
         queryset = self.queryset
+
         if self.action == "retrieve":
             queryset = queryset.select_related("created_by")
+
         return queryset
 
     def perform_create(self, serializer):

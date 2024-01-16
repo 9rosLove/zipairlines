@@ -39,4 +39,5 @@ class AirplaneDetailSerializer(serializers.ModelSerializer):
     def get_created_by(self, instance):
         if instance.created_by:
             return UserPostSerializer(instance.created_by).data
+
         return None

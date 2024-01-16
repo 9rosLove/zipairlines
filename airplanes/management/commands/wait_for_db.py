@@ -6,7 +6,6 @@ from django.db.utils import OperationalError
 
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS("Waiting for database..."))
         db_conn = None
@@ -15,9 +14,7 @@ class Command(BaseCommand):
                 db_conn = connections["default"]
             except OperationalError:
                 self.stdout.write(
-                    self.style.WARNING(
-                        "Database unavailable, waiting 1 second..."
-                    )
+                    self.style.WARNING("Database unavailable, waiting 1 second...")
                 )
                 time.sleep(1)
 
